@@ -63,20 +63,21 @@ void setup()
 
 void loop()
 {
-  if (timeStatus() != timeNotSet) {
-    if (now() != prevDisplay) { //update the display only if time has changed
-      prevDisplay = now();
-      transfer_time.union_time = now();
-      Serial.print(transfer_time.union_array[3], HEX);
-      Serial.print(" ");
-      Serial.print(transfer_time.union_array[2], HEX);
-      Serial.print(" ");
-      Serial.print(transfer_time.union_array[1], HEX);
-      Serial.print(" ");
-      Serial.print(transfer_time.union_array[0], HEX);
-      Serial.print(" ");
-      Serial.println(transfer_time.union_time, HEX);
-    }
+  char command = 0;
+
+  if (Serial.available() > 0)
+  {
+    command = Serial.read();
+  }
+
+  if (command == 10)
+  {
+    transfer_time.union_time = now();
+    Serial.write(transfer_time.union_array[3]);
+    Serial.write(transfer_time.union_array[2]);
+    Serial.write(transfer_time.union_array[1]);
+    Serial.write(transfer_time.union_array[0]);
+    command = 0;
   }
 }
 
