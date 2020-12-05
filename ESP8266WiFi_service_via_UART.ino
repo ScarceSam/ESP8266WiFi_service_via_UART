@@ -35,6 +35,8 @@ void digitalClockDisplay();
 void printDigits(int digits);
 void sendNTPpacket(IPAddress &address);
 
+
+//union to transfer the time over serial one byte at a time
 union time_u{
   time_t union_time;
   byte union_array[4];
